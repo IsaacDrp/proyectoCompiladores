@@ -49,9 +49,9 @@ public class Inicio extends Application {
         hoja = new Canvas(600, 600);
         root.getChildren().add(hoja);
         graficos = hoja.getGraphicsContext2D();
-        MusicaCiclica entrada = new MusicaCiclica("musica_entrada");
+        MusicaCiclica entrada = new MusicaCiclica("spider dance");
         hiloFondo = new Thread(entrada);
-        //hiloFondo.start();
+        hiloFondo.start();
         fondo = new Fondo(55, 55, "/fes/aragon/imagenes/derecha.png", 2, ventana);
 
     }

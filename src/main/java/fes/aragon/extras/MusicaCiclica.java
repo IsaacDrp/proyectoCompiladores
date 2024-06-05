@@ -24,7 +24,7 @@ public class MusicaCiclica implements Runnable {
 	private BufferedInputStream buffer = null;
 	private Player player = null;
 	private FileInputStream archivo;
-	private String nombreArchivo;
+	private final String nombreArchivo;
 
 	public MusicaCiclica(String archivo) {
 		this.nombreArchivo = archivo;
