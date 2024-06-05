@@ -1,8 +1,11 @@
-derecha
-coloca 5 7
-mover 2
-mover 2
+coloca 1 1
+repetir 4
 izquierda
-coloca 4 3
 mover 1
+arriba
 mover 1
+derecha
+mover 1
+abajo
+mover 1
+fin_repetir
