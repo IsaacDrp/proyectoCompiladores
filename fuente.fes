@@ -1,0 +1,10 @@
+coloca 2 2
+izquierda
+mover 1
+mover 2
+derecha
+mover 5
+repetir 3
+arriba
+mover 3
+fin repetir

@@ -31,6 +31,11 @@
       <version>1.0.1</version>
     </dependency>
 
+    <dependency>
+      <groupId>net.sf.java-cup</groupId>
+      <artifactId>java-cup</artifactId>
+      <version>11</version>
+    </dependency>
 
     <dependency>
       <groupId>org.junit.jupiter</groupId>

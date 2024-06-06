@@ -8,6 +8,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import fes.aragon.compilador.Compilador;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
@@ -46,13 +47,13 @@ public class Fondo extends ComponentesJuego {
 	public Fondo(int x, int y, String imagen, int velocidad, Stage ventana) {
 		super(x, y, imagen, velocidad);
 		try{
-			System.out.println(this.getClass().getResource(imagen).getFile());
 			this.derechaImg = new Image(new File(this.getClass().getResource(imagen).getFile()).toURI().toString());
             this.izquierdaImg = new Image(new File(this.getClass().getResource("/fes/aragon/imagenes/izquierda.png").getFile()).toURI().toString());
 			this.arribaImg = new Image(new File(this.getClass().getResource("/fes/aragon/imagenes/arriba.png").getFile()).toURI().toString());
 			this.abajoImg = new Image(new File(this.getClass().getResource("/fes/aragon/imagenes/abajo.png").getFile()).toURI().toString());
 			this.manzana = new Image(new File(this.getClass().getResource("/fes/aragon/imagenes/manzana.png").getFile()).toURI().toString());
         } catch (Exception e) {
+			System.out.println("a");
             throw new RuntimeException(e);
         }
 
@@ -86,10 +87,10 @@ public class Fondo extends ComponentesJuego {
 		/*
 		 * graficos.drawImage(imagen, (x+(ancho+10)*2), y,ancho,alto);
 		 * graficos.strokeRect((x+(ancho+10)*2), y, ancho, alto);
-		 * 
+		 *
 		 * graficos.drawImage(imagen, x, (y+(alto+10)*2),ancho,alto);
 		 * graficos.strokeRect(x, (y+(alto+10)*2), ancho, alto);
-		 * 
+		 *
 		 * graficos.drawImage(imagen, (x+(ancho+10)*2), (y+(alto+10)*2),ancho,alto);
 		 * graficos.strokeRect((x+(ancho+10)*2), (y+(alto+10)*2), ancho, alto);
 		 */
@@ -327,14 +328,24 @@ public class Fondo extends ComponentesJuego {
 
 		//AQUI SE SUPONE QUE ES UN ARCHIVO IDEAL YA PARSEADO, ENTONCES YO VOY A MODIFICAR PARA QUE AQUI MANDE A LLAMAR AL PARSER
 
-		//ParserJuego parser = new ParserJuego();
-		//parser.setRuta(ruta.getAbsolutePath());
+		Compilador comp = new Compilador();
+		comp.setArchivo(ruta.getAbsolutePath());
+		this.comandos.clear();
+		boolean exitoso = false;
+        try {
+            ArrayList<String> out = comp.task();
+			String buff = "";
 
-		//Arraylist de reporte del parser
+			if(out.get(0).equals("analisis exitoso")){
+				exitoso = true;
+			}
 
-		ArrayList<String> reporte = parser.task();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
-		if (ruta != null /* && reporte.size().equals("aprobado") */) {
+
+        if (ruta != null || exitoso) {
 			FileReader fr = new FileReader(ruta);
 			BufferedReader buff = new BufferedReader(fr);
 			String cad;

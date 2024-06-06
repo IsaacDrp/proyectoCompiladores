@@ -1,0 +1,57 @@
+package Compilador;
+import java_cup.runtime.Symbol;
+import java.util.*;
+import java.io.*;
+
+parser code
+{:
+    public ArrayList<String> datos=new ArrayList<>();
+    public Stack<String> errores = new Stack<>();
+
+    public ArrayList<String> getErrores(){
+        datos.addAll(errores);
+        return datos;
+    }
+    public void syntax_error(Symbol s)
+    {
+        String lexema = s.value.toString();
+        int fila = s.right;
+        int columna = s.left;
+
+        String datos = lexema+" "+fila+" "+columna+" Error Sintactico "+"Caracter no esperado";
+        errores.add(datos);
+
+    }
+
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception
+    {
+        String lexema = s.value.toString();
+        int fila = s.right;
+        int columna = s.left;
+        String datos = lexema+" "+fila+" "+columna+" Error Sintactico "+"Caracter no esperado";
+        errores.add(datos);
+
+    }
+:}
+
+terminal COLOCA, FINREPETIR, REPETIR, MOVER, ARRIBA, ABAJO, IZQUIERDA, DERECHA;
+terminal int NUMERO;
+non terminal S, D, E, T, F;
+
+start with S;
+
+S ::= D E ;
+
+D ::= COLOCA F F ;
+
+E ::= REPETIR F E FINREPETIR
+|   ARRIBA T
+|   ABAJO T
+|   IZQUIERDA T
+|   DERECHA T ;
+
+T ::=  MOVER F T
+| MOVER F E
+| MOVER F  ;
+
+F ::= NUMERO ;
